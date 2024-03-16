@@ -1,0 +1,9 @@
+mkdir scripts_and_resources/test_img
+mkdir scripts_and_resources/test_img/trace_images
+julia scripts_and_resources/curve_fit.jl
+
+julia scripts_and_resources/add_difference_ok_nok.jl
+mkdir scripts_and_resources/test_img/analysis
+julia scripts_and_resources/poi.jl
+
+ruby scripts_and_resources/merge_points.rb

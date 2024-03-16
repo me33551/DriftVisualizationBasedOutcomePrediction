@@ -1,0 +1,2 @@
+rm -r scripts_and_resources/test_img
+cp scripts_and_resources/ats_nok_ok_bkup.json scripts_and_resources/ats_nok_ok.json
