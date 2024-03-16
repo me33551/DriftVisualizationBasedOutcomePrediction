@@ -16,11 +16,11 @@ same_timestamp_usage_2 = [10,9,9,9,8,8,8,7,10,7,8,8,7,5,1,0,0]
 ninety_deg_usage = nil 
 shortest_distance_usage = nil
 same_timestamp_usage = nil
-if(true) then
+if(ARGV[0] == '1') then
   ninety_deg_usage = ninety_deg_usage_1
   shortest_distance_usage = shortest_distance_usage_1
   same_timestamp_usage = same_timestamp_usage_1
-elsif(false)
+elsif(ARGV[0] == '2')
   ninety_deg_usage = ninety_deg_usage_2
   shortest_distance_usage = shortest_distance_usage_2
   same_timestamp_usage = same_timestamp_usage_2
@@ -33,7 +33,7 @@ analysed_things = ["difference_ok_nok_90-degrees-method", "difference_ok_nok_sho
 
 analysed_things.each() do |analysed_thing| 
   obj = initial_obj[analysed_thing]
-  overall_results = {'90-degrees-method' => {:richtig => 0, :undecidable => 0, :falsch => 0}, 'shortest-distance-method' => {:richtig => 0, :undecidable => 0, :falsch => 0}, 'same-timestamp-method' => {:richtig => 0, :undecidable => 0, :falsch => 0}}
+  overall_results = {'90-degrees-method' => {:correct => 0, :undecidable => 0, :incorrect => 0}, 'shortest-distance-method' => {:correct => 0, :undecidable => 0, :incorrect => 0}, 'same-timestamp-method' => {:correct => 0, :undecidable => 0, :incorrect => 0}}
   
   poi = (obj['poi'] + obj['peaks']).uniq()
   poi.sort!()
@@ -75,9 +75,9 @@ analysed_things.each() do |analysed_thing|
     end
     corridor = 0
     compare = trace_outcome == 'ok' ? 1 : -1
-    (overall['90-degrees-method'][:ok] - overall['90-degrees-method'][:nok]).abs() <= corridor ? overall_results['90-degrees-method'][:undecidable] += 1 : (compare == (overall['90-degrees-method'][:ok] <=> overall['90-degrees-method'][:nok]) ? overall_results['90-degrees-method'][:richtig] += 1 : overall_results['90-degrees-method'][:falsch] += 1)
-    (overall['shortest-distance-method'][:ok] - overall['shortest-distance-method'][:nok]).abs() <= corridor ? overall_results['shortest-distance-method'][:undecidable] += 1 : (compare == (overall['shortest-distance-method'][:ok] <=> overall['shortest-distance-method'][:nok]) ? overall_results['shortest-distance-method'][:richtig] += 1 : overall_results['shortest-distance-method'][:falsch] += 1)
-    (overall['same-timestamp-method'][:ok] - overall['same-timestamp-method'][:nok]).abs() <= corridor ? overall_results['same-timestamp-method'][:undecidable] += 1 : (compare == (overall['same-timestamp-method'][:ok] <=> overall['same-timestamp-method'][:nok]) ? overall_results['same-timestamp-method'][:richtig] += 1 : overall_results['same-timestamp-method'][:falsch] += 1)
+    (overall['90-degrees-method'][:ok] - overall['90-degrees-method'][:nok]).abs() <= corridor ? overall_results['90-degrees-method'][:undecidable] += 1 : (compare == (overall['90-degrees-method'][:ok] <=> overall['90-degrees-method'][:nok]) ? overall_results['90-degrees-method'][:correct] += 1 : overall_results['90-degrees-method'][:incorrect] += 1)
+    (overall['shortest-distance-method'][:ok] - overall['shortest-distance-method'][:nok]).abs() <= corridor ? overall_results['shortest-distance-method'][:undecidable] += 1 : (compare == (overall['shortest-distance-method'][:ok] <=> overall['shortest-distance-method'][:nok]) ? overall_results['shortest-distance-method'][:correct] += 1 : overall_results['shortest-distance-method'][:incorrect] += 1)
+    (overall['same-timestamp-method'][:ok] - overall['same-timestamp-method'][:nok]).abs() <= corridor ? overall_results['same-timestamp-method'][:undecidable] += 1 : (compare == (overall['same-timestamp-method'][:ok] <=> overall['same-timestamp-method'][:nok]) ? overall_results['same-timestamp-method'][:correct] += 1 : overall_results['same-timestamp-method'][:incorrect] += 1)
   end
   puts "#{analysed_thing} (#{poi}) => #{overall_results}"
 end
